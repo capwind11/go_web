@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<div>
+    <ul id="ctn">
+        <li><b>标题</b><span>[标题]</span><b>作者</b><span>[作者]</span></li>
+
+    </ul>
+</div>
+    <script src = "/static/jquery.min.js"></script>
+    <script src="/static/template-web.js"></script>
+    <script>
+        function  init() {
+            $.get("/api/list/data",{},function (resp) {
+                console.log(resp);
+                var html=[];
+                for(var i=0;i<resp.length;i++){
+                    html.push('<li>'+resp[i].id+"<b>标题</b><span> ["+resp[i].title+"]</span><b>作者</b><span> ["+resp[i].author+"]</span>"+'<button onclick="del('+resp[i].id+')">删除</button></li>');
+                }
+                $("#ctn").html(html.join(""));
+            },"json")
+        }
+        function del(id) {
+            $.get("/api/list/del",{id:id},function (resp) {
+                console.log(resp);
+                alert(resp)
+                if (resp=="删除成功"){
+                    init();
+                }
+            })
+        }
+        init();
+    </script>
+</body>
+</html>

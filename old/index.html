@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>first try</title>
+
+</head>
+<body>
+    <input type = "text" id = "sea">
+    <botton onclick = "search()">查询</botton>
+    <h2>good</h2>
+    <div id = "id"></div>
+    <div id = "name"></div>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function search() {
+        var ipt = document.getElementById("sea").value;
+        console.log(ipt);
+        getData(ipt);
+    }
+    function getData(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("get","/data?id="+id);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState==4&&xhr.status==200){
+                // console.log(xhr.responseText);
+                var obj = JSON.parse(xhr.responseText);
+                console.log(obj);
+                document.getElementById("id").innerHTML = obj.ID;
+                document.getElementById("name").innerHTML = obj.Name;
+            }
+        };
+        xhr.send(null);
+        var test = $("#sea")
+        console.dir(test)
+    }
+</script>
+
+</body>
+</html>
